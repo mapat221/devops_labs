@@ -10,7 +10,7 @@ import (
 )
 
 type Process struct {
-	Args[]string `json:"args"`
+	Args []string `json:"args"`
 	Cwd  string   `json:"cwd"`
 }
 
@@ -23,7 +23,7 @@ type Namespace struct {
 }
 
 type Linux struct {
-	Namespaces[]Namespace `json:"namespaces"`
+	Namespaces []Namespace `json:"namespaces"`
 }
 
 type Config struct {
@@ -59,7 +59,7 @@ func main() {
 	upperDir := filepath.Join(baseDir, "upper")
 	workDir := filepath.Join(baseDir, "work")
 	mergedDir := filepath.Join(baseDir, "merged")
-	
+
 	err = os.MkdirAll(baseDir, 0755)
 	if err != nil {
 		fmt.Printf("eror creating dir %s: %v\n", baseDir, err)
