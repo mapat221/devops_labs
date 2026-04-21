@@ -1,0 +1,14 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: backend-destination
+spec:
+  host:
+    backend
+  subsets: #делаем 2 субъекта на 2 версии бэка
+  - name: v1 
+    labels:
+      version: v1
+  - name: v2
+    labels:
+      version: v2

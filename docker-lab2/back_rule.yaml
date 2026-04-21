@@ -1,0 +1,12 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: backend-rule
+spec:
+  hosts:
+  - backend #ловим все запросы, летящие на бэк
+  http:
+  - route:
+    - destination:
+        host: backend #шлем весь http трафик на бэк версии 1
+        subset: v1  
