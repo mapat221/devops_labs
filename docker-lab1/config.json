@@ -1,0 +1,28 @@
+{
+    "ociVersion": "1.0.1",
+    "id": "cfgHrafda3",
+    "hostname": "alpine",
+    "process": {
+        "args": ["/bin/sh"
+        ],
+        "cwd": "/"
+    },
+    "root": {
+        "path": "alpine"
+    },
+    "linux": {
+        "namespaces": [
+            {
+                "type": "pid"
+            },
+            {
+                "type": "uts"
+            },
+            {
+                "type": "mount"
+            }
+        ]
+    }
+
+
+}
