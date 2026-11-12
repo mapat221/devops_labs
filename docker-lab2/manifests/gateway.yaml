@@ -1,0 +1,34 @@
+apiVersion: networking.istio.io/v1alpha3 #api сетевой части Istio
+kind: Gateway
+metadata:
+  name: gateway
+spec:
+  selector:
+    istio: ingressgateway #используем стандартный маршрутизатор
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*" #допускаем любой хост
+
+---
+#правило маршрутизации
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService 
+metadata:
+  name: frontend-gateway
+spec:
+  hosts:
+  - "*" #распространяем на все внешние адреса
+  gateways:
+  - gateway
+  http:
+  - route:
+    - destination:
+        host: frontend #шлем весь трафик кубам на фронтенд
+        port:
+          number: 80
+

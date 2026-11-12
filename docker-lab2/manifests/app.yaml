@@ -1,0 +1,90 @@
+#сам сервис, точка входа в локальной сети
+apiVersion: v1
+kind: Service 
+metadata:             
+  name: frontend
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: frontend  #перенаправляем трафик на все поды, у которых есть лейбл app: frontend
+---
+#деплой пода фронта
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend #чекает поды с ярлыком frontend
+  template:
+    metadata:
+      labels:
+        app: frontend #лейбл фронта, чтобы сервис frontend слал сюда трафик
+        version: v1
+    spec:
+      containers:
+      - name: frontend #имя контейнера
+        image: nginx:alpine #по базе берем nginx веб сервак с alpine
+---
+#бэк, точка входа в локальной сети, сам сервис
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: backend #перенаправляем на поды с ярлыками бэка
+---
+#деплой первого пода бэка
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend #ловим трафик от сервиса бэка тут
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: backend
+        version: v1
+    spec:
+      containers:
+      - name: backend #имя контейнера
+        image: nginx:alpine #ставим тот же nginx с alpine
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend #тут тоже ловим трафик с сервиса бэка
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: backend
+        version: v2
+    spec:
+      containers:
+      - name: backend
+        image: nginx:alpine #так же nginx с alpine
+
+
+
+
+
+
+  
+  
